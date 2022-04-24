@@ -2,9 +2,6 @@
 import 'package:abctechapp/provider/order_provider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:get/get_connect/http/src/response/response.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_disposable.dart';
-
 import '../model/order.dart';
 import '../model/order_created.dart';
 
@@ -21,7 +18,9 @@ class OrderService extends GetxService implements OrderServiceInterface {
   Future<OrderCreated> createOrder(Order order) async {
     Response response = await _orderProvider.postOrder(order);
     if (response.hasError) {
-      return Future.error(ErrorDescription('Erro na API'));
+      return Future.error(
+          ErrorDescription('Erro na API: ' + response.bodyString.toString()));
+      //print(response.bodyString);
     }
     try {
       return Future.sync(() => OrderCreated(success: true, message: ""));

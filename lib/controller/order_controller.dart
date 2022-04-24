@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -48,29 +46,33 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
   }
 
   finishStartOrder() {
-    switch (screenState.value) {
-      case OrderState.creating:
-        change(null, status: RxStatus.loading());
-        _getLocation().then((value) {
-          _order = Order(
-              operatorId: int.parse(operatorIdController.text),
-              services: getServicesIds(),
-              start: orderLocationFromPosition(value),
-              end: null);
-          screenState.value = OrderState.started;
-          change(null, status: RxStatus.success());
-        });
+    if (operatorIdController.text != "" && selectedAssistances.isNotEmpty) {
+      switch (screenState.value) {
+        case OrderState.creating:
+          change(null, status: RxStatus.loading());
+          _getLocation().then((value) {
+            _order = Order(
+                operatorId: int.parse(operatorIdController.text),
+                services: getServicesIds(),
+                start: orderLocationFromPosition(value),
+                end: null);
+            screenState.value = OrderState.started;
+            change(null, status: RxStatus.success());
+          });
 
-        break;
-      case OrderState.started:
-        change(null, status: RxStatus.loading());
-        _getLocation().then((value) {
-          _order.end = orderLocationFromPosition(value);
-          _createOrder();
-        });
+          break;
+        case OrderState.started:
+          change(null, status: RxStatus.loading());
+          _getLocation().then((value) {
+            _order.end = orderLocationFromPosition(value);
+            _createOrder();
+          });
 
-        break;
-      default:
+          break;
+        default:
+      }
+    } else {
+      Get.snackbar("Erro: ", "Insira seu ID e os serviços prestados");
     }
   }
 
