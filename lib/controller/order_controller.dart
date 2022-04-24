@@ -46,7 +46,11 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
   }
 
   finishStartOrder() {
-    if (operatorIdController.text != "" && selectedAssistances.isNotEmpty) {
+    if (operatorIdController.text == "") {
+      Get.snackbar("Erro: ", "Insira seu ID");
+    } else if (selectedAssistances.isEmpty) {
+      Get.snackbar("Erro: ", "Selecione os Serviços Prestados");
+    } else {
       switch (screenState.value) {
         case OrderState.creating:
           change(null, status: RxStatus.loading());
@@ -71,8 +75,6 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
           break;
         default:
       }
-    } else {
-      Get.snackbar("Erro: ", "Insira seu ID e os serviços prestados");
     }
   }
 
