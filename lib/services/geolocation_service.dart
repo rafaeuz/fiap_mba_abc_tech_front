@@ -1,10 +1,8 @@
-import 'dart:html';
-
 import 'package:geolocator/geolocator.dart';
 
 abstract class GeolocationServiceInterface {
-  Future<bool> _enabledService();
-  Future<void> _requestPermission();
+  // Future<bool> _enabledService();
+  // Future<void> _requestPermission();
   bool isPermissionEnabled();
   Future<Position> getPosition();
   Future<bool> start();
@@ -14,7 +12,7 @@ class GeolocationService implements GeolocationServiceInterface {
   bool _serviceEnabled = false;
   LocationPermission _permission = LocationPermission.denied;
 
-  @override
+  // @override
   Future<bool> _enabledService() async {
     _serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!_serviceEnabled) {
@@ -23,7 +21,7 @@ class GeolocationService implements GeolocationServiceInterface {
     return Future.sync(() => true);
   }
 
-  @override
+  // @override
   Future<void> _requestPermission() async {
     _permission = await Geolocator.checkPermission();
     if (_permission == LocationPermission.denied) {
@@ -43,6 +41,9 @@ class GeolocationService implements GeolocationServiceInterface {
 
   @override
   Future<Position> getPosition() async {
+    if (!isPermissionEnabled()) {
+      return Future.error('Permissão para geolocalizaçvão não habilitada');
+    }
     return await Geolocator.getCurrentPosition();
   }
 
