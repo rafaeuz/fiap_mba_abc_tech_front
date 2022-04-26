@@ -46,7 +46,8 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
   }
 
   finishStartOrder() {
-    if (operatorIdController.text == "") {
+    if (operatorIdController.text == "" ||
+        int.parse(operatorIdController.text) == 0) {
       Get.snackbar("Erro: ", "Insira seu ID");
     } else if (selectedAssistances.isEmpty) {
       Get.snackbar("Erro: ", "Selecione os Serviços Prestados");
