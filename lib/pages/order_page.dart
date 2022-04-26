@@ -74,7 +74,7 @@ class OrderPage extends GetView<OrderController> {
                 controller.finishStartOrder();
               }, child: Obx((() {
                 if (controller.screenState.value == OrderState.creating) {
-                  return const Text("Inicar serviço");
+                  return const Text("Iniciar serviço");
                 } else {
                   return const Text("Finalizar serviço");
                 }
