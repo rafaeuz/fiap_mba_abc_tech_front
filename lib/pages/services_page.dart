@@ -10,13 +10,15 @@ class ServicesPage extends GetView<AssistanceController> {
     return ListView.builder(
         shrinkWrap: true,
         itemCount: list.length,
-        itemBuilder: (context, index) => ListTile(
+        itemBuilder: (context, index) => Card(
+          child: ListTile(
             title: Text(list[index].name),
-            selectedColor: Colors.blueAccent,
+            selectedColor: Colors.blueGrey,
             selected: controller.isSelected(index),
             onTap: () {
               controller.selectAssist(index);
-            }));
+            })),
+        );
   }
 
   @override
@@ -32,8 +34,12 @@ class ServicesPage extends GetView<AssistanceController> {
               Row(
                 children: const [
                   Expanded(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 25, bottom: 25),
                       child: Text("Os serviços disponíveis são:",
-                          textAlign: TextAlign.left))
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w300, color: Colors.black87),
+                  )))
                 ],
               ),
               controller.obx((state) => renderAssists(state ?? []),
