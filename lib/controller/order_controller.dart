@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 
@@ -48,9 +48,9 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
   finishStartOrder() {
     if (operatorIdController.text == "" ||
         int.parse(operatorIdController.text) == 0) {
-      Get.snackbar("Erro: ", "Insira seu ID");
+      Get.snackbar("Atenção: ", "Insira o seu código de prestador", backgroundColor: Colors.orangeAccent[700], colorText: Colors.white);
     } else if (selectedAssistances.isEmpty) {
-      Get.snackbar("Erro: ", "Selecione os Serviços Prestados");
+      Get.snackbar("Atenção: ", "Selecione os serviços prestados", backgroundColor: Colors.orangeAccent[700], colorText: Colors.white);
     } else {
       switch (screenState.value) {
         case OrderState.creating:
@@ -83,11 +83,11 @@ class OrderController extends GetxController with StateMixin<OrderCreated> {
     screenState.value = OrderState.finished;
     _orderService.createOrder(_order).then((value) {
       if (value.success) {
-        Get.snackbar("Sucesso: ", "Ordem de serviço criada");
+        Get.snackbar("Sucesso: ", "Ordem de serviço finalizada", backgroundColor: Colors.green[700], colorText: Colors.white);
       }
       clearForm();
     }).catchError((error) {
-      Get.snackbar("Erro: ", error.toString());
+      Get.snackbar("Não foi possível concluir a ordem de serviço: ", error.toString(), backgroundColor: Colors.red[400], colorText: Colors.white);
       clearForm();
     });
   }
