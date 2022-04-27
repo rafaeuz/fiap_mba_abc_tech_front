@@ -25,9 +25,9 @@ class OrderPage extends GetView<OrderController> {
             Row(children: const [
               Expanded(
                   child: Text(
-                'Preencha o fomulário de ordem de serviço',
+                'Preencha o formulário de ordem de serviço',
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w200),
               ))
             ]),
             Obx(() {
@@ -50,11 +50,11 @@ class OrderPage extends GetView<OrderController> {
                         'Selecione os serviços a serem prestados',
                         textAlign: TextAlign.left,
                         style: TextStyle(
-                            fontSize: 14.0, fontWeight: FontWeight.bold),
+                            fontSize: 18.0, fontWeight: FontWeight.w400),
                       ))),
               Ink(
                   decoration: const ShapeDecoration(
-                      shape: CircleBorder(), color: Colors.blueAccent),
+                      shape: CircleBorder(), color: Colors.blueGrey),
                   child: IconButton(
                       icon: const Icon(
                         Icons.search,
@@ -69,16 +69,18 @@ class OrderPage extends GetView<OrderController> {
             ),
             Row(children: [
               Expanded(
-                  child: ElevatedButton(onPressed: () {
-                FocusScope.of(context).unfocus();
-                controller.finishStartOrder();
-              }, child: Obx((() {
-                if (controller.screenState.value == OrderState.creating) {
-                  return const Text("Iniciar serviço");
-                } else {
-                  return const Text("Finalizar serviço");
-                }
-              }))))
+                  child: ElevatedButton(
+                    onPressed: () {
+                    FocusScope.of(context).unfocus();
+                    controller.finishStartOrder();
+                  }, child: Obx((() {
+                  if (controller.screenState.value == OrderState.creating) {
+                    return const Text("Iniciar serviço");
+                  } else {
+                    return const Text("Finalizar serviço");
+                  }
+                }),
+              )))
             ]),
           ],
         ),
