@@ -8,12 +8,13 @@ class ServicesPage extends GetView<AssistanceController> {
 
   Widget renderAssists(List<Assistance> list) {
     return ListView.builder(
+        physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: list.length,
         itemBuilder: (context, index) => Card(
           child: ListTile(
             title: Text(list[index].name),
-            selectedColor: Colors.blueGrey,
+            selectedColor: Colors.blue,
             selected: controller.isSelected(index),
             onTap: () {
               controller.selectAssist(index);
