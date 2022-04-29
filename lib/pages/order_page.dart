@@ -9,6 +9,7 @@ class OrderPage extends GetView<OrderController> {
 
   Widget renderAssists(List<Assistance> assists) {
     return ListView.builder(
+        physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: assists.length,
         itemBuilder: (context, index) =>
@@ -69,11 +70,11 @@ class OrderPage extends GetView<OrderController> {
             ),
             Row(children: [
               Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {
-                    FocusScope.of(context).unfocus();
-                    controller.finishStartOrder();
-                  }, child: Obx((() {
+                  child: ElevatedButton(onPressed: () {
+                FocusScope.of(context).unfocus();
+                controller.finishStartOrder();
+              }, child: Obx(
+                (() {
                   if (controller.screenState.value == OrderState.creating) {
                     return const Text("Iniciar serviço");
                   } else {
